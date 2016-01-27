@@ -1,0 +1,42 @@
+<?php 
+	include 'database.php';
+	
+	try {
+		$db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+		// set the PDO error mode to exception
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$sql = "CREATE DATABASE IF NOT EXISTS youhuo";
+		// use exec() because no results are returned
+		$db->exec($sql);
+		echo "Database created successfully<br>";
+		// // use exec() because no results are returned
+		$sql = "USE youhuo;
+				CREATE TABLE `categories` (`id` int(11) NOT NULL,`name` varchar(255) NOT NULL,`slug` varchar(255) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+				CREATE TABLE `images` (`id` int(11) NOT NULL,`name` varchar(255) NOT NULL,`work_id` int(11) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+				CREATE TABLE `users` (`id` int(11) NOT NULL,`username` varchar(255) NOT NULL,`password` varchar(255) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+				CREATE TABLE `works` (`id` int(11) NOT NULL,`name` varchar(255) NOT NULL,`slug` varchar(255) NOT NULL,`content` longtext NOT NULL,`category_id` int(11) NOT NULL,`image_id` int(11) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+				ALTER TABLE `categories` ADD PRIMARY KEY (`id`);
+				ALTER TABLE `images` ADD PRIMARY KEY (`id`);
+				ALTER TABLE `users` ADD PRIMARY KEY (`id`);
+				ALTER TABLE `works` ADD PRIMARY KEY (`id`);
+				ALTER TABLE `categories` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+				ALTER TABLE `images` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+				ALTER TABLE `users` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+				ALTER TABLE `works` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;";
+		$db->exec($sql);
+	}
+	catch(PDOException $e)
+	{
+		echo $sql . "<br>" . $e->getMessage();
+		die();
+	}
+
+	// try{
+	// 	$db = new PDO('mysql:host=localhost;dbname=camagru', 'root', 'root');
+	// 	$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+	// 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+ // 	}catch (Exception $e){
+ // 		echo "Impossible de se connecter à la base de donnée";
+	// 	echo $e->getMessage();
+ // 		die();
+ // 	}
