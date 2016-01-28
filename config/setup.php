@@ -1,19 +1,17 @@
 <?php 
-	include 'database.php';
+	include ROOT_CONFIG.'database.php';
 	
 	try {
 		$db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 		// set the PDO error mode to exception
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "CREATE DATABASE IF NOT EXISTS youhuo";
+		$sql = "CREATE DATABASE IF NOT EXISTS camagru_mdebelle";
 		// use exec() because no results are returned
 		$db->exec($sql);
-		echo "Database created successfully<br>";
-		// // use exec() because no results are returned
-		$sql = "USE youhuo;
+		$sql = "USE camagru_mdebelle;
 				CREATE TABLE `categories` (`id` int(11) NOT NULL,`name` varchar(255) NOT NULL,`slug` varchar(255) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 				CREATE TABLE `images` (`id` int(11) NOT NULL,`name` varchar(255) NOT NULL,`work_id` int(11) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-				CREATE TABLE `users` (`id` int(11) NOT NULL,`username` varchar(255) NOT NULL,`password` varchar(255) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+				CREATE TABLE `users` (`id` int(11) NOT NULL,`username` varchar(255) NOT NULL,`password` varchar(255) NOT NULL, `email` varchar(255) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 				CREATE TABLE `works` (`id` int(11) NOT NULL,`name` varchar(255) NOT NULL,`slug` varchar(255) NOT NULL,`content` longtext NOT NULL,`category_id` int(11) NOT NULL,`image_id` int(11) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 				ALTER TABLE `categories` ADD PRIMARY KEY (`id`);
 				ALTER TABLE `images` ADD PRIMARY KEY (`id`);

@@ -11,14 +11,19 @@ $works = $select->fetchAll();
 	<h1>Camagru</h1>
 
 	<div>
-	<?php foreach ($works as $k => $work): ?>
-			<div>
-				<a href="view.php?id=<?php echo $work['id']; ?>">
-					<img src="<?php echo WEBROOT . 'img/works/' . $work['image_name']; ?>" alt="">
-					<?php echo $work['name']; ?>
-				</a>
-			</div>
-	<?php endforeach ?>	
+		<ul>
+			<li><a href="<?php echo WEBROOT.'login'; ?>">signin</a></li>
+			<li><a href="<?php echo WEBROOT.'newuser'; ?>">creat my camagru</a></li>
+		</ul>
+
+		<?php foreach ($works as $k => $work): ?>
+				<div>
+					<a href="view.php?id=<?php echo $work['id']; ?>">
+						<img src="<?php echo WEBROOT . 'img/works/' . $work['image_name']; ?>" alt="">
+						<?php echo $work['name']; ?>
+					</a>
+				</div>
+		<?php endforeach ?>	
 	</div>
 
 
