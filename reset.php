@@ -24,7 +24,7 @@ if (isset($_POST['username']) && isset($_POST['q']) && isset($_POST['password'])
 		if ($p == $_POST['q']) {
 
 			// hash Email and link matches
-			$password = $db->quote($_POST['password']);
+			$password = hash('sha1',$db->quote($_POST['password']));
 			$db->query("UPDATE users SET password=$password WHERE username=$username");
 			mail( $_POST['email'] , "new count" , $_POST['username'].", your password was successefully changed. lets start !!" );
 			header('Location:'.WEBROOT.'login.php');  
