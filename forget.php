@@ -1,0 +1,43 @@
+<?php
+$auth = 0;
+include 'lib/includes.php';
+if (isset($_POST['email'])) {
+
+	if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+
+		// Email is Valid
+		$email = $db->quote($_POST['email']);
+		$select = $db->query("SELECT * FROM users WHERE email=$email");
+		
+		if ($select->rowCount() > 0) {
+
+			// User found
+			// Creat a recovery key to send it by email
+			$salt = 'r9P+*p3CBT^qP^t@Y1|{~g9F[jOL)3_qlj>O)vPXymMyGiPQW(:aYkk^x?I63/.y';
+			$password = hash('sha512', $salt.$_POST['email']);
+			$reseturl = WEBROOT.'reset.php?q='.$password;
+
+			$bodymail = "Hello,\nIf you really want to reset your password follow this link ".$reseturl."\nYour camagru Team";
+			mail( $_POST['email'] , "Forget password" , $bodymail);
+			setFlash('an email have been sent');
+		
+		} else {
+
+			// No User Found
+			setFlash('no email found', 'error');
+		
+		}
+	}
+}
+include 'partials/header.php';
+?>
+
+<form action="#" method="post">
+	<div>
+		<label for="email">Email</label>
+		<?php echo input('email'); ?>
+	</div>
+	<button type="submit">Send</button>
+</form>
+<?php include 'partials/footer.php'; 
+
