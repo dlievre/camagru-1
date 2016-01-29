@@ -8,11 +8,16 @@ if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['passwor
 		$email = $db->quote($_POST['email']);
 		$password = $db->quote(sha1($_POST['password']));
 
-		$db->query("INSERT INTO users SET username=$username, password=$password, email=$email");
 
-		mail( $email , "new count" , "Welcom to you ".$username.", you successefully regiter to Camagru. lets start" );
-		header('Location:'.WEBROOT.'login.php');  
-		die();
+		$select = $db->query("SELECT * FROM users WHERE username=$username");
+		if ($select->rowCount() == 0) {
+			$db->query("INSERT INTO users SET username=$username, password=$password, email=$email");
+
+			mail( $_POST['email'] , "new count" , "Welcom to you ".$_POST['username'].", you successefully regiter to Camagru. lets start !!" );
+			header('Location:'.WEBROOT.'login.php');  
+		} else {
+			setFlash('username already existe', 'error');
+		}
 	}
 }
 include 'partials/header.php';
