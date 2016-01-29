@@ -4,13 +4,9 @@ include 'lib/includes.php';
 if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])){
 
 	if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-		printf('yes');
 		$username = $db->quote($_POST['username']);
 		$email = $db->quote($_POST['email']);
 		$password = $db->quote(sha1($_POST['password']));
-
-		echo $password;
-		//TODO check if user already exist
 
 		$db->query("INSERT INTO users SET username=$username, password=$password, email=$email");
 
