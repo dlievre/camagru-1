@@ -10,14 +10,11 @@ include 'partials/header.php';
 
 	<h1>Camagru</h1>
 
-	<div>
-		<ul>
-			<li><a href="<?php echo WEBROOT.'login'; ?>">signin</a></li>
-			<li><a href="<?php echo WEBROOT.'forget'; ?>">forget my password</a></li>
-			<li><a href="<?php echo WEBROOT.'newuser'; ?>">creat my camagru</a></li>
-		</ul>
-
-	</div>
+	<ul>
+		<li><a href="<?php echo WEBROOT.'login'; ?>">signin</a></li>
+		<li><a href="<?php echo WEBROOT.'newuser'; ?>">creat my camagru</a></li>
+		<li><a href="<?php echo WEBROOT.'forget'; ?>">forget my password</a></li>
+	</ul>
 
 
 <?php include 'partials/footer.php'; ?>
