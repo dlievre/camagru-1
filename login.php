@@ -3,7 +3,9 @@ $auth = 0;
 include 'lib/includes.php';
 if (isset($_POST['username']) && isset($_POST['password'])){
 	$username = $db->quote($_POST['username']);
+	print($username);
 	$password = sha1($_POST['password']);
+	print($password);
 	$sql = "SELECT * FROM users WHERE username=$username AND password='$password'";
 	$select = $db->query($sql);
 	if ($select->rowCount() > 0){

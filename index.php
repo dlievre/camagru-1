@@ -11,9 +11,9 @@ include 'partials/header.php';
 	<h1>Camagru</h1>
 
 	<ul>
-		<li><a href="<?php echo WEBROOT.'login'; ?>">signin</a></li>
-		<li><a href="<?php echo WEBROOT.'newuser'; ?>">creat my camagru</a></li>
-		<li><a href="<?php echo WEBROOT.'forget'; ?>">forget my password</a></li>
+		<li><a href="<?php echo WEBROOT.'login.php'; ?>">signin</a></li>
+		<li><a href="<?php echo WEBROOT.'newuser.php'; ?>">creat my camagru</a></li>
+		<li><a href="<?php echo WEBROOT.'forget.php'; ?>">forget my password</a></li>
 	</ul>
 
 
