@@ -31,15 +31,43 @@ if (isset($_GET['delete'])) {
 }
 
 // GET MY IMAGES
+// $pp -> Pictures Per Pages
+$ppp = 4;
+
+// recuperer le nombre d'image enregistrées
+$select = $db->query('SELECT COUNT(*) AS total FROM images');
+$total_pic = $select->fetch();
+$nb_pic = $total_pic['total'];
+
+$nb_page = ceil($nb_pic / $ppp);
+
+// Pagination du type all_creation.php?p=
+
+if(isset($_GET['p'])) {
+
+	// recuperer la valeur de la page courante passer en GET
+	$cp = intval($_GET['p']);
+
+	if($cp > $nb_page) {
+		$cp=$nb_page;
+	} else if ($cp < 1) {
+		$cp = 1;
+	}
+
+} else {
+	$cp = 1;
+}
+
+$first = ($cp-1) * $ppp;
+
+
 $user_id = $db->quote($user['id']);
-$select = $db->query("SELECT * FROM images WHERE user_id=$user_id ORDER BY pub_date DESC");
+$select = $db->query("SELECT * FROM images WHERE user_id=$user_id ORDER BY pub_date DESC LIMIT $first, $ppp");
 $images = $select->fetchAll();
 
 ?>
 
-	<h1> works </h1>
-
-	<p><a href="new_creation.php">Ajouter un montage</a></p>
+	<h1> Mes creations </h1>
 
 	<ul>
 		<?php foreach ($images as $image) : ?>
@@ -51,5 +79,16 @@ $images = $select->fetchAll();
 		 <?php  endforeach; ?>
 	</ul>
 		
+
+	<div class="paginate">
+		<p><?php 
+			if ($cp > 1) { 
+				echo ' <a href="'. WEBROOT .'admin/my_creations.php?p='. ($cp - 1) . '">previous</a>'; 
+			} ?> [ <?php echo $cp; ?> ] <?php
+			if ($cp < $nb_page) {
+				echo ' <a href="'. WEBROOT .'admin/my_creations.php?p='. ($cp + 1) . '">next</a>';
+			}
+		?></p>
+	</div>
 
 <?php include '../partials/footer.php'; ?>

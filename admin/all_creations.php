@@ -2,52 +2,63 @@
 include '../lib/includes.php';
 include '../partials/admin_header.php';
 
-// DELETE A IMAGE
-$user = $_SESSION['Auth'];
-if (isset($_GET['delete'])) {
+// GET ALL IMAGES
+// $pp -> Pictures Per Pages
+$ppp = 4;
 
-	// jeton de securité
-	checkCsrf();
+// recuperer le nombre d'image enregistrées
+$select = $db->query('SELECT COUNT(*) AS total FROM images');
+$total_pic = $select->fetch();
+$nb_pic = $total_pic['total'];
 
-	// recuperer l'image a supprimer
-	$id = $db->quote($_GET['delete']);
-	$select = $db->query("SELECT name, user_id FROM images WHERE id=$id");	
-	$image = $select->fetch();
+$nb_page = ceil($nb_pic / $ppp);
 
-	if ($image['user_id'] == $user['id']) {
-	
-		// l'image est bien celle de l'utilisateur connecter
-		// suppression du fichier
-		unlink(IMAGES . '/works/' . $image['name']);
-		// supression en bdd
-		$db->query("DELETE FROM images WHERE id=$id");
+// Pagination du type all_creation.php?p=
 
-		// message de confirmation
-		setflash('La categorie a bien été supprimée');
-		header('Location:'.WEBROOT.'admin/work.php');
-		die();
+if(isset($_GET['p'])) {
+
+	// recuperer la valeur de la page courante passer en GET
+	$cp = intval($_GET['p']);
+
+	if($cp > $nb_page) {
+		$cp=$nb_page;
+	} else if ($cp < 1) {
+		$cp = 1;
 	}
+
+} else {
+	$cp = 1;
 }
 
-// GET MY IMAGES
-$user_id = $db->quote($user['id']);
-$select = $db->query("SELECT * FROM images ORDER BY pub_date DESC");
+$first = ($cp-1) * $ppp;
+
+// Get result from db
+$select = $db->query("SELECT * FROM images ORDER BY pub_date DESC LIMIT $first, $ppp");
 $images = $select->fetchAll();
 
 ?>
 
-	<h1> works </h1>
-
-	<p><a href="new_creation.php">Ajouter un montage</a></p>
+	<h1> Les plus récents </h1>
 
 	<ul>
 		<?php foreach ($images as $image) : ?>
 			<li>
 				<img src="<?php echo WEBROOT; ?>img/<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" width="100"><br>
-				| Likez | Commenter
+				| Likez | <a href="<?php echo WEBROOT . 'admin/comment.php?id='. $image['id'] ?>">Commenter</a>
 		 	</li>
 		 <?php  endforeach; ?>
 	</ul>
+
+	<div class="paginate">
+		<p><?php 
+			if ($cp > 1) { 
+				echo ' <a href="'. WEBROOT .'admin/all_creations.php?p='. ($cp - 1) . '">previous</a>'; 
+			} ?> [ <?php echo $cp; ?> ] <?php
+			if ($cp < $nb_page) {
+				echo ' <a href="'. WEBROOT .'admin/all_creations.php?p='. ($cp + 1) . '">next</a>';
+			}
+		?></p>
+	</div>
 		
 
 <?php include '../partials/footer.php'; ?>

@@ -6,11 +6,11 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<h1>Administration</h1>
+	<h1>Bienvenu, <?php echo $_SESSION['Auth']['username'] ?></h1>
 	<div class="navigation">
 		<ul>
 			<li><a href="<?php echo WEBROOT ?>admin/">HOME</a></li>
-			<li><a href="<?php echo WEBROOT ?>logout">Log out</a></li>
+			<li><a href="<?php echo WEBROOT ?>logout.php">Log out</a></li>
 		</ul>
 		<ul>
 			<li><a href="all_creations.php"> View all creations</a></li>
