@@ -2,6 +2,14 @@
 include '../lib/includes.php';
 include '../partials/admin_header.php';
 
+function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct){ 
+
+	// function patch for respecting alpha work find on http://php.net/manual/fr/function.imagecopymerge.php
+	$cut = imagecreatetruecolor($src_w, $src_h); 
+	imagecopy($cut, $dst_im, 0, 0, $dst_x, $dst_y, $src_w, $src_h);
+	imagecopy($cut, $src_im, 0, 0, $src_x, $src_y, $src_w, $src_h);
+	imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w, $src_h, $pct); 
+} 
 
 if (isset($_POST['cpt_1']) && isset($_POST['alpha'])) {
 
@@ -14,19 +22,18 @@ if (isset($_POST['cpt_1']) && isset($_POST['alpha'])) {
 	// creat image from this temporary 
 	$im = imagecreatefrompng(IMAGES .'/tmp1.png');
 
-	// get selected alpha 
-	// TODO a real selected alpha
-	$alpha = imagecreatefrompng(IMAGES .'/alpha1.png');
+	// get selected alpha
+	$alpha = imagecreatefrompng(IMAGES .'/alpha/'.$_POST['alpha'].'.png');
 	
 	// Place the alpha
-	// TODO find a real place for the alpha
-	$marge_right = 10;
-	$marge_bottom = 10;
-	$sx = imagesx($alpha);
-	$sy = imagesy($alpha);
+	// $marge_right = 0;
+	// $marge_bottom = 0;
+	// $sx = imagesx($alpha);
+	// $sy = imagesy($alpha);
 
-	// Merge the alpha onto our photo with an opacity of 80%
-	imagecopymerge($im, $alpha, imagesx($im) - $sx - $marge_right, imagesy($im) - $sy - $marge_bottom, 0, 0, imagesx($alpha), imagesy($alpha), 80);
+	// Merge the alpha onto our photo with an opacity of 50%
+	
+	imagecopymerge_alpha($im, $alpha, 0, 0, 0, 0, imagesx($alpha), imagesy($alpha), 100);
 
 	// Create file name and register the image in database
 	$user = $_SESSION['Auth'];
@@ -79,8 +86,9 @@ if (isset($_POST['cpt_1']) && isset($_POST['alpha'])) {
 		<form action="#" method="post" enctype="multipart/form-data">
 			<div>
 			<ul>
-				<li><input type="radio" name="alpha" value="1">alpha1</li>
-				<li><input type="radio" name="alpha" value="2">alpha2</li>
+				<li><label><img src="<?php echo WEBROOT; ?>img/alpha/alphatest1.png"><input type="radio" name="alpha" value="alphatest1" checked="checked"></label></li>
+				<li><label><img src="<?php echo WEBROOT; ?>img/alpha/alphatest2.png"><input type="radio" name="alpha" value="alphatest2"></label></li>
+				<li><label><img src="<?php echo WEBROOT; ?>img/alpha/alphatest3.png"><input type="radio" name="alpha" value="alphatest3"></label></li>
 			</ul>
 			</div>
 			<div>
@@ -163,11 +171,6 @@ if (isset($_POST['cpt_1']) && isset($_POST['alpha'])) {
 
 
 		startbutton.addEventListener('click', function(ev){
-			ev.preventDefault();
-			takepicture();
-			sleep(1000);
-			takepicture();
-			sleep(1000);
 			takepicture();
 		}, false);
 
