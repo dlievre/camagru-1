@@ -10,7 +10,7 @@
 		$db->exec($sql);
 		$sql = "USE camagru_mdebelle;
 				CREATE TABLE `categories` (`id` int(11) NOT NULL,`name` varchar(255) NOT NULL,`slug` varchar(255) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-				CREATE TABLE `images` (`id` int(11) NOT NULL,`name` varchar(255) NOT NULL,`user_id` int(11) NOT NULL,`pub_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+				CREATE TABLE `images` (`id` int(11) NOT NULL,`name` varchar(255) NOT NULL,`user_id` int(11) NOT NULL,`pub_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,`like_count` int(11) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 				CREATE TABLE `users` (`id` int(11) NOT NULL,`username` varchar(255) NOT NULL,`password` varchar(255) NOT NULL, `email` varchar(255) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 				CREATE TABLE `comments` (`id` int(11) NOT NULL,`name` varchar(255) NOT NULL,`slug` varchar(255) NOT NULL,`content` longtext NOT NULL,`category_id` int(11) NOT NULL,`image_id` int(11) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 				ALTER TABLE `categories` ADD PRIMARY KEY (`id`);

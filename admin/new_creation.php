@@ -11,8 +11,10 @@ function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, 
 	imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w, $src_h, $pct); 
 } 
 
-if (isset($_POST['cpt_1']) && isset($_POST['alpha'])) {
+if (isset($_POST['cpt_1']) && $_POST['cpt_1'] != "" && isset($_POST['alpha'])) {
+	checkCsrf();
 
+	print('bob');
 	// get the content of the captured image from the webcam put it in a tmp img
 	list($type, $data) = explode(';', $_POST['cpt_1']);
 	list(, $data) = explode(',', $data);
@@ -24,15 +26,7 @@ if (isset($_POST['cpt_1']) && isset($_POST['alpha'])) {
 
 	// get selected alpha
 	$alpha = imagecreatefrompng(IMAGES .'/alpha/'.$_POST['alpha'].'.png');
-	
-	// Place the alpha
-	// $marge_right = 0;
-	// $marge_bottom = 0;
-	// $sx = imagesx($alpha);
-	// $sy = imagesy($alpha);
-
-	// Merge the alpha onto our photo with an opacity of 50%
-	
+		
 	imagecopymerge_alpha($im, $alpha, 0, 0, 0, 0, imagesx($alpha), imagesy($alpha), 100);
 
 	// Create file name and register the image in database
@@ -51,7 +45,9 @@ if (isset($_POST['cpt_1']) && isset($_POST['alpha'])) {
 	header('Location:'.WEBROOT.'admin/my_creations.php');
 	die();
 
-} else if (isset($_FILES['image'])) {
+}
+
+if (isset($_FILES['image']) && isset($_POST['alpha'])) {
 	checkCsrf();
 
 	$image = $_FILES['image'];
@@ -67,6 +63,20 @@ if (isset($_POST['cpt_1']) && isset($_POST['alpha'])) {
 		
 		$image_name = $user['username'].'_'. $image_id . '.' . $extension;
 		move_uploaded_file($image['tmp_name'], IMAGES .'/'. $image_name);
+
+		if ($extension == 'jpg')
+			$im = imagecreatefromjpeg(IMAGES .'/'. $image_name);
+		else if ($extension == 'png')
+			$im = imagecreatefrompng(IMAGES .'/'. $image_name);
+
+		$alpha = imagecreatefrompng(IMAGES .'/alpha/'.$_POST['alpha'].'.png');
+
+		imagecopymerge_alpha($im, $alpha, 0, 0, 0, 0, imagesx($alpha), imagesy($alpha), 100);
+
+		imagepng($im,  IMAGES .'/'. $image_name);
+		// free memory
+		imagedestroy($im);
+
 		$image_name = $db->quote($image_name);
 		$db->query("UPDATE images SET name=$image_name WHERE id=$image_id");
 	}
@@ -85,7 +95,7 @@ if (isset($_POST['cpt_1']) && isset($_POST['alpha'])) {
 
 		<form action="#" method="post" enctype="multipart/form-data">
 			<div>
-			<ul>
+			<ul class="selection">
 				<li><label><img src="<?php echo WEBROOT; ?>img/alpha/alphatest1.png"><input type="radio" name="alpha" value="alphatest1" checked="checked"></label></li>
 				<li><label><img src="<?php echo WEBROOT; ?>img/alpha/alphatest2.png"><input type="radio" name="alpha" value="alphatest2"></label></li>
 				<li><label><img src="<?php echo WEBROOT; ?>img/alpha/alphatest3.png"><input type="radio" name="alpha" value="alphatest3"></label></li>

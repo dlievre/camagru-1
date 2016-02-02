@@ -105,6 +105,52 @@
   border-bottom: none;
 }
 
+.admin .navigation ul{
+  list-style: none;
+  padding: 0;
+}
+
+.admin .navigation ul li {
+	width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    height: 60px;
+    background: #8e44ad;
+}
+
+.admin .navigation ul li a {
+  display: block;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-decoration: none;
+  color: #bdc3c7;
+  text-transform: uppercase;
+}
+
+.admin ul.display-images {
+  list-style: none;
+  padding: 0;
+}
+
+.admin ul.display-images li {
+    display: block;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: #8e44ad;
+    padding: 25px;
+}
+.admin ul.selection {
+  list-style: none;
+  padding: 0;
+}
+
 @media only screen and (min-width: 500px) {
   /* line 92, ../sass/style.scss */
   body.home, body.admin {
@@ -117,7 +163,7 @@
 	</style>
 </head>
 <body class="admin">
-	<h1>Bienvenu, <?php echo $_SESSION['Auth']['username'] ?></h1>
+	<h1 class="title">Bienvenue, <?php echo $_SESSION['Auth']['username'] ?></h1>
 	<div class="navigation">
 		<ul>
 			<li><a href="<?php echo WEBROOT ?>admin/">HOME</a></li>

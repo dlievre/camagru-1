@@ -67,13 +67,13 @@ $images = $select->fetchAll();
 
 ?>
 
-	<h1> Mes creations </h1>
+	<h2> Mes creations </h2>
 
-	<ul>
+	<ul class="display-images">
 		<?php foreach ($images as $image) : ?>
 
 			<li>
-				<img src="<?php echo WEBROOT; ?>img/<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" width="100"><br>
+				<img class="img" src="<?php echo WEBROOT; ?>img/<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" width="100%"><br>
 				| <a href="?delete=<?php echo $image['id'].'&'.csrf();?>" onclick="return('Sur sur sur ?')">Supprimer</a>
 			</li>
 		 <?php  endforeach; ?>
