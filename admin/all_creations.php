@@ -44,7 +44,7 @@ $images = $select->fetchAll();
 		<?php foreach ($images as $image) : ?>
 			<li>
 				<img src="<?php echo WEBROOT; ?>img/<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" width="100"><br>
-				| Likez | <a href="<?php echo WEBROOT . 'admin/comment.php?id='. $image['id'] ?>">Commenter</a>
+				[<?php echo $image['like_count']; ?>]  <a href="<?php echo WEBROOT . 'admin/plus_like.php?id='. $image['id'] ?>">Likez</a> | <a href="<?php echo WEBROOT . 'admin/comment.php?id='. $image['id'] ?>">Commenter</a>
 		 	</li>
 		 <?php  endforeach; ?>
 	</ul>

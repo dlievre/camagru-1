@@ -8,7 +8,7 @@ include 'partials/header.php';
 
 ?>
 
-	<h1  class="title"><a href="">CAMAGRU</a></h1>
+	<h1  class="title"><a href="/">CAMAGRU</a></h1>
 
 	<ul class="menu">
 		<li><a href="<?php echo WEBROOT.'login.php'; ?>">signin</a></li>

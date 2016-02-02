@@ -28,7 +28,7 @@ if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['passwor
 }
 include 'partials/header.php';
 ?>
-		<h1 class="title"><a href="">CAMAGRU</a></h1>
+		<h1 class="title"><a href="/">CAMAGRU</a></h1>
 		<p>Inscription</p>
 		<form action="#" method="post">
 			<div class="formulaire username">
