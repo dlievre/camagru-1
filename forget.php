@@ -15,7 +15,7 @@ if (isset($_POST['email'])) {
 			// Creat a recovery key to send it by email
 			$salt = 'r9P+*p3CBT^qP^t@Y1|{~g9F[jOL)3_qlj>O)vPXymMyGiPQW(:aYkk^x?I63/.y';
 			$password = hash('sha512', $salt.$_POST['email']);
-			$reseturl = WEBROOT.'reset.php?q='.$password;
+			$reseturl = 'localhost:8080'.WEBROOT.'reset.php?q='.$password;
 
 			$bodymail = "Hello,\nIf you really want to reset your password follow this link ".$reseturl."\nYour camagru Team";
 			mail( $_POST['email'] , "Forget password" , $bodymail);
@@ -31,21 +31,17 @@ if (isset($_POST['email'])) {
 }
 include 'partials/header.php';
 ?>
-		<h1 class="title"><a href="">CAMAGRU</a></h1>
-		<form action="">
+	<div class="forget">
+		<h1 class="title"><a href="/">CAMAGRU</a></h1>
+		<form action="#"  method="post">
 			<div class="formulaire email">
 				<?php echo input('email', 'email'); ?>
 			</div>
 			<div class="formulaire submit">
 				<input type="submit" value="Reset">
 			</div>
-		</form>
-<!-- <form action="#" method="post">
-	<div>
-		<label for="email">Email</label>
-		<?php echo input('email'); ?>
+		</form>		
 	</div>
-	<button type="submit">Send</button>
-</form> -->
+
 <?php include 'partials/footer.php'; 
 

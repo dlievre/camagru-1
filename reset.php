@@ -18,13 +18,10 @@ if (isset($_POST['username']) && isset($_POST['q']) && isset($_POST['password'])
 
 		$p = hash('sha512', $salt.$user['email']);
 
-		echo 'p '. $p;
-		echo 'q '. $_POST['q'];
-
 		if ($p == $_POST['q']) {
 
 			// hash Email and link matches
-			$password = hash('sha1',$db->quote($_POST['password']));
+			$password = $db->quote(hash('sha1',$_POST['password']));
 			$db->query("UPDATE users SET password=$password WHERE username=$username");
 			mail( $_POST['email'] , "new count" , $_POST['username'].", your password was successefully changed. lets start !!" );
 			header('Location:'.WEBROOT.'login.php');  
@@ -39,18 +36,22 @@ if (isset($_POST['username']) && isset($_POST['q']) && isset($_POST['password'])
 }
 include 'partials/header.php';
 ?>
+	<div class="connection">
+		<form action="#" method="post">
+			<div class="formulaire username">
+				<?php echo input('username'); ?>
+			</div>
+			<div class="formulaire password">
+				<input type="password" id="password" name="password">
+			</div>
+			<input type="hidden" name="q" value='<?php if (isset($_GET["q"])) { echo $_GET["q"];} ?>' />
+		
+			<div class="formulaire submit">
+				<input type="submit" value="Reset">
+			</div>
+		</form>
+	</div>
 
-<form action="#" method="post">
-	<div>
-		<label for="username">Nom d'utilisateur</label>
-		<?php echo input('username'); ?>
-	</div>
-	<div>
-		<label for="password">New Password</label>
-		<input type="password" id="password" name="password">
-	</div>
-	<input type="hidden" name="q" value='<?php if (isset($_GET["q"])) { echo $_GET["q"];} ?>' />
-	<button type="submit">Reset</button>
-</form>
+
 <?php include 'partials/footer.php'; 
 
