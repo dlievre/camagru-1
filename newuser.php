@@ -28,8 +28,23 @@ if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['passwor
 }
 include 'partials/header.php';
 ?>
-
-<form action="#" method="post">
+		<h1 class="title"><a href="">CAMAGRU</a></h1>
+		<p>Inscription</p>
+		<form action="#" method="post">
+			<div class="formulaire username">
+				<?php echo input('username'); ?>
+			</div>
+			<div class="formulaire email">
+				<?php echo input('email'); ?>
+			</div>
+			<div class="formulaire password">
+				<input type="password" palceholder="password">
+			</div>
+			<div class="formulaire submit">
+				<input type="submit" value="Creer mon compte">
+			</div>
+		</form>
+<!-- <form action="#" method="post">
 	<div>
 		<label for="username">Nom d'utilisateur</label>
 		<?php echo input('username'); ?>
@@ -43,6 +58,6 @@ include 'partials/header.php';
 		<input type="password" id="password" name="password">
 	</div>
 	<button type="submit">Se connecter</button>
-</form>
+</form> -->
 <?php include 'partials/footer.php'; 
 

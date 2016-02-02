@@ -31,13 +31,21 @@ if (isset($_POST['email'])) {
 }
 include 'partials/header.php';
 ?>
-
-<form action="#" method="post">
+		<h1 class="title"><a href="">CAMAGRU</a></h1>
+		<form action="">
+			<div class="formulaire email">
+				<?php echo input('email', 'email'); ?>
+			</div>
+			<div class="formulaire submit">
+				<input type="submit" value="Reset">
+			</div>
+		</form>
+<!-- <form action="#" method="post">
 	<div>
 		<label for="email">Email</label>
 		<?php echo input('email'); ?>
 	</div>
 	<button type="submit">Send</button>
-</form>
+</form> -->
 <?php include 'partials/footer.php'; 
 

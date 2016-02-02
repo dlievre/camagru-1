@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>Camagru 42</title>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="../stylesheets/style.css">
 </head>
 <body>
 	<h1>Bienvenu, <?php echo $_SESSION['Auth']['username'] ?></h1>
